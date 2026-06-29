@@ -1,0 +1,813 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orto Cafe Dubai | Specialty Coffee & Serenity</title>
+  <style>
+    /* --- CSS Reset & Variables --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #FDFBF7;
+      --bg-secondary: #F6F3EC;
+      --text-main: #2C2A29;
+      --text-muted: #71717a;
+      --text-light: #a1a1aa;
+      --accent-dark: #18181b;
+      --selection-bg: #E6DFD3;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+      background-color: var(--selection-bg);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.3s ease;
+    }
+
+    /* --- Navigation --- */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background-color: rgba(253, 251, 247, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-b: 1px solid #f4f4f5;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 200;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 48px;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-dark);
+    }
+
+    .nav-cta {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: 1px solid #d4d4d8;
+      padding: 12px 24px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-cta:hover {
+      background-color: var(--accent-dark);
+      color: #fff;
+      border-color: var(--accent-dark);
+    }
+
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--accent-dark);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      right: 0;
+      background-color: var(--bg-primary);
+      border-bottom: 1px solid #e4e4e7;
+      padding: 32px 24px;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      z-index: 999;
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    /* --- Hero Section --- */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-color: #e4e4e7;
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(15%) brightness(0.9);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #fff;
+      max-width: 700px;
+      padding: 0 24px;
+    }
+
+    .hero-tagline {
+      font-size: 0.85rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      opacity: 0.9;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 200;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      margin-bottom: 32px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .btn {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .btn-solid {
+      background-color: #fff;
+      color: var(--accent-dark);
+      font-weight: 500;
+    }
+
+    .btn-solid:hover {
+      background-color: #f4f4f5;
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      color: #fff;
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-outline:hover {
+      background-color: #fff;
+      color: var(--accent-dark);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0.7;
+      animation: bounce 2s infinite;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+
+    .scroll-indicator svg {
+      width: 16px;
+      height: 16px;
+      margin-top: 8px;
+    }
+
+    /* --- Philosophy Section --- */
+    .philosophy {
+      padding: 120px 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 24px;
+    }
+
+    .philosophy-heading {
+      font-size: 1.85rem;
+      font-weight: 300;
+      color: #3f3f46;
+      max-width: 700px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    .divider {
+      width: 48px;
+      height: 1px;
+      background-color: #d4d4d8;
+      margin: 0 auto 32px;
+    }
+
+    .philosophy-text {
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 550px;
+      margin: 0 auto;
+      font-size: 0.95rem;
+    }
+
+    /* --- Menu Section --- */
+    .menu-section {
+      background-color: var(--bg-secondary);
+      padding: 100px 40px;
+    }
+
+    .menu-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .menu-title {
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .menu-column-title {
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: #3f3f46;
+      border-bottom: 1px solid #d4d4d8;
+      padding-bottom: 12px;
+      margin-bottom: 32px;
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+
+    .item-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .item-description {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      font-weight: 300;
+      margin-top: 4px;
+    }
+
+    .item-price {
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      color: #52525b;
+    }
+
+    /* --- Space Showcase Grid --- */
+    .space-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 40px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .space-img-wrapper {
+      height: 400px;
+      overflow: hidden;
+      background-color: #f4f4f5;
+    }
+
+    .space-grid .space-img-wrapper:nth-child(2) {
+      transform: translateY(32px);
+    }
+
+    .space-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .space-img-wrapper:hover img {
+      transform: scale(1.05);
+    }
+
+    /* --- Location / Info Section --- */
+    .location-section {
+      background-color: var(--accent-dark);
+      color: #f4f4f5;
+      padding: 100px 40px;
+    }
+
+    .location-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .info-block {
+      margin-bottom: 32px;
+    }
+
+    .info-title {
+      color: #fff;
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .info-text {
+      color: #a1a1aa;
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .directions-link {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #fff;
+      border-bottom: 1px solid #fff;
+      padding-bottom: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .directions-link:hover {
+      color: #d4d4d8;
+      border-color: #d4d4d8;
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 350px;
+      background-color: #27272a;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      filter: grayscale(100%) contrast(1.2);
+    }
+
+    .map-overlay-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .map-overlay-text span {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #71717a;
+      margin-bottom: 8px;
+    }
+
+    .map-overlay-text p {
+      font-size: 1.25rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    /* --- Footer --- */
+    .footer {
+      background-color: #09090b;
+      color: #52525b;
+      padding: 48px 40px;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-top: 1px solid #18181b;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    /* --- Animations --- */
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+      40% { transform: translate(-50%, -10px); }
+      60% { transform: translate(-50%, -5px); }
+    }
+
+    /* --- Responsive Breakpoints --- */
+    @media (max-width: 992px) {
+      .menu-grid, .location-container {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .space-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .space-grid .space-img-wrapper:nth-child(2) {
+        transform: translateY(0);
+      }
+      .space-img-wrapper {
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0 24px;
+      }
+      .nav-links, .nav-cta {
+        display: none;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .hero-title {
+        font-size: 2.25rem;
+      }
+      .hero-buttons {
+        flex-direction: column;
+      }
+      .footer-container {
+        flex-direction: column;
+        gap: 24px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a href="#" class="nav-logo">ORTO</a>
+    
+    <div class="nav-links">
+      <a href="#philosophy">Philosophy</a>
+      <a href="#menu">Menu</a>
+      <a href="#space">The Space</a>
+      <a href="#location">Find Us</a>
+    </div>
+
+    <a href="#location" class="nav-cta">Visit Us</a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" id="menuIcon" />
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Dropdown Navigation -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#philosophy" class="mobile-link">Philosophy</a>
+    <a href="#menu" class="mobile-link">Menu</a>
+    <a href="#space" class="mobile-link">The Space</a>
+    <a href="#location" class="mobile-link">Find Us</a>
+  </div>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=2000&q=80" alt="Minimalist interior of Orto Cafe">
+    </div>
+    
+    <div class="hero-content">
+      <p class="hero-tagline">Specialty Coffee & Serenity</p>
+      <h1 class="hero-title">A Minimalist Sanctuary</h1>
+      <div class="hero-buttons">
+        <a href="#menu" class="btn btn-solid">Explore Menu</a>
+        <a href="#location" class="btn btn-outline">Our Location</a>
+      </div>
+    </div>
+    
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7-7m7 7V3" />
+      </svg>
+    </div>
+  </header>
+
+  <!-- Philosophy Section -->
+  <section id="philosophy" class="philosophy">
+    <p class="section-label">Our Concept</p>
+    <h2 class="philosophy-heading">Where clean architecture meets the pure essence of carefully sourced specialty coffee.</h2>
+    <div class="divider"></div>
+    <p class="philosophy-text">
+      Orto is designed as a quiet escape from the city’s pace. We focus heavily on clean lines, continuous concrete textures, and framing beautiful views, creating an environment where you can slow down and truly appreciate the craft behind every pour.
+    </p>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menu" class="menu-section">
+    <div class="menu-container">
+      <div class="menu-header">
+        <p class="section-label">Curated Selection</p>
+        <h2 class="menu-title">The Menu</h2>
+      </div>
+
+      <div class="menu-grid">
+        <!-- Column 1: Coffee -->
+        <div>
+          <h3 class="menu-column-title">Specialty Coffee</h3>
+          
+          <div class="menu-item">
+            <div>
+              <h4 class="item-name">Espresso</h4>
+              <p class="item-description">Single origin, rotating profile</p>
+            </div>
+            <span class="item-price">AED 22</span>
+          </div>
+
+          <div class="menu-item">
+            <div>
+              <h4 class="item-name">Cortado / Flat White</h4>
+              <p class="item-description">Perfected milk-to-coffee ratio</p>
+            </div>
+            <span class="item-price">AED 26</span>
+          </div>
+
+          <div class="menu-item">
+            <div>
+              <h4 class="item-name">V60 Pourover</h4>
+              <p class="item-description">Precision brewed pour-over filter method</p>
+            </div>
+            <span class="item-price">AED 35</span>
+          </div>
+
+          <div class="menu-item">
+            <div>
+              <h4 class="item-name">Spanish Latte</h4>
+              <p class="item-description">Slightly sweetened specialty blend</p>
+            </div>
+            <span class="item-price">AED 32</span>
+          </div>
+        </div>
+
+        <!-- Column 2: Signatures & Bakery -->
+        <div>
+          <h3 class="menu-column-title">Signatures & Bakery</h3>
+          
+          <div class="menu-item">
+            <div>
+              <h4 class="item-name">Ceremonial Matcha Latte</h4>
+              <p class="item-description">Pure Japanese Uji matcha whisked to order</p>
+            </div>
+            <span class="item-price">AED 34</span>
+          </div>
+
+          <div class="menu-item">
+            <div>
+              <h4 class="item-name">Iced Hibiscus Brew</h4>
+              <p class="item-description">Refreshing, floral cold infusion</p>
+            </div>
+            <span class="item-price">AED 28</span>
+          </div>
+
+          <div class="menu-item">
+            <div>
+              <h4 class="item-name">Almond Croissant</h4>
+              <p class="item-description">Flaky, double-baked artisan pastry</p>
+            </div>
+            <span class="item-price">AED 24</span>
+          </div>
+
+          <div class="menu-item">
+            <div>
+              <h4 class="item-name">Signature San Sebastian</h4>
+              <p class="item-description">Creamy burnt cheesecake with a rich center</p>
+            </div>
+            <span class="item-price">AED 38</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Space Gallery Showcase -->
+  <section id="space" class="space-grid">
+    <div class="space-img-wrapper">
+      <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80" alt="Barista crafting espresso shot">
+    </div>
+    <div class="space-img-wrapper">
+      <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" alt="Minimalist interior architecture of the cafe">
+    </div>
+    <div class="space-img-wrapper">
+      <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=800&q=80" alt="Freshly brewed filter coffee service">
+    </div>
+  </section>
+
+  <!-- Find Us / Contact Section -->
+  <section id="location" class="location-section">
+    <div class="location-container">
+      <div>
+        <div class="info-block">
+          <p class="section-label" style="margin-bottom: 8px;">Find Us</p>
+          <h2 class="menu-title" style="color: #fff; margin-bottom: 24px;">ORTO DUBAI</h2>
+        </div>
+        
+        <div class="info-block">
+          <span class="info-title">Location</span>
+          <p class="info-text">
+            Jumeirah 3, Al Moosa Street<br>
+            Overlooking the Dubai Canal, Dubai, UAE
+          </p>
+        </div>
+
+        <div class="info-block">
+          <span class="info-title">Operating Hours</span>
+          <p class="info-text">Daily: 8:30 AM — 11:00 PM</p>
+        </div>
+
+        <div class="info-block">
+          <span class="info-title">Inquiries</span>
+          <p class="info-text">
+            hello@ortocafe.com<br>
+            +971 4 321 0000
+          </p>
+        </div>
+
+        <a href="https://maps.google.com" target="_blank" class="directions-link">
+          Get Directions
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Conceptual Space Block -->
+      <div class="map-placeholder">
+        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1000&q=80" alt="Textured concrete design aesthetic">
+        <div class="map-overlay-text">
+          <span>Overlooking</span>
+          <p>The Dubai Canal</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <p>© <span id="year"></span> ORTO CAFE DUBAI. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://instagram.com/ortodubai" target="_blank">Instagram</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Vanilla JavaScript Logic -->
+  <script>
+    // Set dynamic footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile Menu Interactions
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
+
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+      
+      // Toggle between hamburger icon and X closing mark
+      if (mobileMenu.classList.contains('active')) {
+        menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+      } else {
+        menuIcon.setAttribute('d', 'M3.75 9h16.5m-16.5 6.75h16.5');
+      }
+    });
+
+    // Close menu when clicking on links
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        menuIcon.setAttribute('d', 'M3.75 9h16.5m-16.5 6.75h16.5');
+      });
+    });
+  </script>
+</body>
+</html>
+
+```
